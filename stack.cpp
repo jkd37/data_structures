@@ -4,18 +4,24 @@
 #include <array>
 #include <ios>
 #include <limits>
+#include <cstring>
 
 bool validateSelection(const std::string&);
 bool validateEntry(std::string&);
-void push(const std::string&, std::string*, int&);
-void pop(std::string*, int&);
+char *convertToCstring(const std::string&);
+void push(char*, char**, int&);
+void pop(char**, int&);
 
 int main() {
     bool validInput = false;
     std::string selection;
-    std::string stackInput;
+    std::string userInput;
+    char *stackInput;
     int index = 0;
-    std::string stack[5];
+    char *stack[4];
+    bool hasLooped;
+
+    std::cout<<"Welcome to push and pop!\n"<<"Type \"quit\" to exit.\n\n";
 
     while (true) {
         // get user selection
@@ -31,17 +37,30 @@ int main() {
             pop(stack, index);
         }
 
-        if (selection.length() == 4) {
+        if (selection.length() == 4 && selection.at(0) != 'q' && selection.at(0) != 'Q') {
             // get chars to push
             while (validInput != true) {
                 std::cout<<"Enter up to 2 characters to push: ";
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::getline(std::cin, stackInput);
-                validInput = validateEntry(stackInput);
+
+                if (!hasLooped) {
+                    std::cin.get();
+                }
+
+                std::getline(std::cin, userInput);
+                validInput = validateEntry(userInput);
+                hasLooped = true;
             }
             validInput = false;
+            hasLooped = false;
+
+            stackInput = convertToCstring(userInput);
             push(stackInput, stack, index);
             std::cout<<"index: "<<index<<"\n";
+        }
+
+        if (selection.length() == 4 && (selection.at(0) == 'q' || selection.at(0) == 'Q')) {
+            // quit was entered
+            return 0;
         }
     }
 }
@@ -62,7 +81,7 @@ bool validateSelection(const std::string& s) {
     }
 
     // valide user selection
-    if (s.at(0) != 'p' && s.at(0) != 'P') {
+    if (s.at(0) != 'p' && s.at(0) != 'P' && s.at(0) != 'q' && s.at(0) != 'Q') {
         std::cout<<"Choice not recognized, try agian!\n";
         return false;
     }
@@ -70,11 +89,11 @@ bool validateSelection(const std::string& s) {
         std::cout<<"Choice not recognized, try agian!\n";
         return false;
     }
-    if (s.at(2) != 's' && s.at(2) != 'S' && s.at(2) != 'p' && s.at(2) != 'P') {
+    if (s.at(2) != 's' && s.at(2) != 'S' && s.at(2) != 'p' && s.at(2) != 'P' && s.at(2) != 'i' && s.at(2) != 'I') {
         std::cout<<"Choice not recognized, try agian!\n";
         return false;
     }
-    if (s.length() == 4 && s.at(3) != 'h' && s.at(3) != 'H') {
+    if (s.length() == 4 && s.at(3) != 'h' && s.at(3) != 'H' && s.at(3) != 't' && s.at(3) != 'T') {
         std::cout<<"Choice not recognized, try agian!\n";
         return false;
     }
@@ -113,7 +132,19 @@ bool validateEntry(std::string& s) {
     return true;
 }
 
-void push(const std::string& s, std::string *stack, int& index) {
+char *convertToCstring(const std::string& s) {
+    char *cString;
+    cString = new char[s.length() + 1]; //leave room for null terminator
+
+    for (int i = 0; i < s.length(); i++) {
+        cString[i] = s[i];
+    }
+    cString[s.length()] = '\0';
+
+    return cString;
+}
+
+void push(char *s, char **stack, int& index) {
     // catch overflow case
     if (index == 4) {
         std::cout<<"Overflow! Cannot push to stack...\n";
@@ -125,15 +156,21 @@ void push(const std::string& s, std::string *stack, int& index) {
     return;
 }
 
-void pop(std::string *stack, int& index) {
+void pop(char **stack, int& index) {
     // catch underflow case
     if (index == 0) {
         std::cout<<"Underflow! Cannot pop from stack...\n";
         return;
     }
 
-    std::string entry = stack[index-1];
-    std::cout<<"Popped from stack: \""<<entry<<"\"\n";
+    char *temp = stack[index - 1];
+
+    std::cout<<"Popped from stack: \"";
+    for (int i = 0; i < strlen(temp); i++) {
+        std::cout<<temp[i];
+    }
+    std::cout<<"\"\n";
+
     stack[index-1] = stack[index];
     --index;
     return;
