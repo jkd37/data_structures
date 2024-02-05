@@ -21,12 +21,15 @@ int main() {
     char *stack[4];
     bool hasLooped;
 
-    std::cout<<"Welcome to push and pop!\n"<<"Type \"quit\" to exit.\n\n";
+    std::cout<<"* * * * * * * * * * * * * * *\n";
+    std::cout<<"* Welcome to push and pop!  *\n";
+    std::cout<<"* Type \"quit\" to exit.      *\n";
+    std::cout<<"* * * * * * * * * * * * * * *\n\n";
 
     while (true) {
         // get user selection
         while (validInput != true) {
-            std::cout<<"Push to or pop from the stack? (push/pop)\n";
+            std::cout<<"Push or pop? (push/pop)\n";
             std::cin>>selection;
             validInput = validateSelection(selection);
         };
@@ -55,7 +58,6 @@ int main() {
 
             stackInput = convertToCstring(userInput);
             push(stackInput, stack, index);
-            std::cout<<"index: "<<index<<"\n";
         }
 
         if (selection.length() == 4 && (selection.at(0) == 'q' || selection.at(0) == 'Q')) {
