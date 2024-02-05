@@ -29,7 +29,7 @@ int main() {
     while (true) {
         // get user selection
         while (validInput != true) {
-            std::cout<<"Push or pop? (push/pop)\n";
+            std::cout<<"Push or pop? (push/pop): ";
             std::cin>>selection;
             validInput = validateSelection(selection);
         };
