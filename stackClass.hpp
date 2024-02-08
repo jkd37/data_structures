@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <vector>
 
 #ifndef STACKCLASS_HPP
 #define STACKCLASS_HPP
@@ -12,8 +13,8 @@ private:
     std::string userInput;
     char *stackInput;
     int index = 0;
-    char *stack[4];
     bool hasLooped;
+    std::vector<char*> stack;
 
     bool validateSelection(const std::string& s) {
         // validate all characters are letters or spaces
@@ -144,34 +145,36 @@ public:
         }
     }
 
-    void push(char *s, char **stack, int& index) {
+    void push(char *s, std::vector<char*>& stack, int& index) {
         // catch overflow case
         if (index == 4) {
             std::cout<<"Overflow! Cannot push to stack...\n";
             return;
         }
 
-        stack[index] = s;
+        stack.resize(index + 1); // index + 1 since index starts at 0
+        stack.insert(stack.begin() + index, s); // pushes to the vector position at index
         ++index;
         return;
     }
 
-    void pop(char **stack, int& index) {
+    void pop(std::vector<char*>& stack, int& index) {
         // catch underflow case
         if (index == 0) {
             std::cout<<"Underflow! Cannot pop from stack...\n";
             return;
         }
 
-        char *temp = stack[index - 1];
+        char *temp = stack.at(index-1); // will throw an exception if out of range
 
+        // print the cstring
         std::cout<<"Popped from stack: \"";
         for (int i = 0; i < strlen(temp); i++) {
             std::cout<<temp[i];
         }
         std::cout<<"\"\n";
 
-        stack[index-1] = stack[index];
+        stack.at(index-1) = nullptr; // delete the last entry
         --index;
         return;
     }
