@@ -16,6 +16,12 @@ private:
     bool hasLooped;
     std::vector<char*> stack;
 
+
+    /*
+        Remarks: Takes the user input and checks that it matches one of the two options (push/pop)
+        Params: std::string - A string that will be checked
+        Returns: bool - Returns true if the input string matches one of the selections, otherwise returns false
+    */
     bool validateSelection(const std::string& s) {
         // validate all characters are letters or spaces
         for (const char c : s) {
@@ -52,6 +58,16 @@ private:
         return true;
     }
 
+    /*
+        Remarks: Takes the user input and runs a series of checks and modifications.
+            1) All characters must be in the alphabet, spaces, or periods.
+            2) Only 2 characters allowed
+            3) Convert all periods to spaces
+            4) Left justification
+            5) Convert lowercase to uppercase
+        Params: std::string - The string to run the checks/modifications on
+        Returns: bool - true if all checks pass (1 and 2), false otherwise
+    */
     bool validateEntry(std::string& s) {
         // validate all characters are letters or spaces
         for (const char c : s) {
@@ -83,6 +99,11 @@ private:
         return true;
     }
 
+    /*
+        Remarks: Converts the given input string to a cstring
+        Params: std::string - input string
+        Returns: char* - the cstring created from the input string
+    */
     char *convertToCstring(const std::string& s) {
         char *cString;
         cString = new char[s.length() + 1]; //leave room for null terminator
@@ -145,6 +166,12 @@ public:
         }
     }
 
+    /*
+        Remarks: Inserts the given cstring to the next available vector location, marked by the index. Checks the index for overflow case where index is 4. Increments the index
+        Params: char* - the input cstring to be inserted into the vector
+                std::vector<char*>& - the vector of cstrings
+                int& - the index for the vector
+    */
     void push(char *s, std::vector<char*>& stack, int& index) {
         // catch overflow case
         if (index == 4) {
@@ -158,6 +185,11 @@ public:
         return;
     }
 
+    /*
+        Remarks: Deletes the vector entry at the location marked by the index. Checks for underflow case where index is 0. Decrements the index
+        Params: char** - the vector of cstrings
+                int - the index
+    */
     void pop(std::vector<char*>& stack, int& index) {
         // catch underflow case
         if (index == 0) {

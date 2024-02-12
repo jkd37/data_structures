@@ -2,10 +2,45 @@
 #include <string>
 #include <cstring>
 
+/*
+    Remarks: Takes the user input and checks that it matches one of the two options (push/pop)
+    Params: std::string - A string that will be checked
+    Returns: bool - Returns true if the input string matches one of the selections, otherwise returns false
+*/
 bool validateSelection(const std::string&);
+
+/*
+    Remarks: Takes the user input and runs a series of checks and modifications.
+        1) All characters must be in the alphabet, spaces, or periods.
+        2) Only 2 characters allowed
+        3) Convert all periods to spaces
+        4) Left justification
+        5) Convert lowercase to uppercase
+    Params: std::string - The string to run the checks/modifications on
+    Returns: bool - true if all checks pass (1 and 2), false otherwise
+*/
 bool validateEntry(std::string&);
+
+/*
+    Remarks: Converts the given input string to a cstring
+    Params: std::string - input string
+    Returns: char* - the cstring created from the input string
+*/
 char *convertToCstring(const std::string&);
+
+/*
+    Remarks: Inserts the given cstring to the next available array location, marked by the index. Checks the index for overflow case where index is 4. Increments the index
+    Params: char* - the input cstring to be inserted into the array
+            char** - the array of cstrings
+            int - the index for the array
+*/
 void push(char*, char**, int&);
+
+/*
+    Remarks: Deletes the array entry at the location marked by the index. Checks for underflow case where index is 0. Decrements the index
+    Params: char** - the array of cstrings
+            int - the index
+*/
 void pop(char**, int&);
 
 int main() {
