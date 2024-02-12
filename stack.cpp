@@ -43,6 +43,13 @@ void push(char*, char**, int&);
 */
 void pop(char**, int&);
 
+/*
+    Remarks: Prints the contents of the stack up to the index
+    Params: char** - the array of cstrings representing the stack
+            int& - the index
+*/
+void printStack(char**, const int);
+
 int main() {
     bool validInput = false;
     std::string selection;
@@ -69,8 +76,10 @@ int main() {
         // perform pop operation
         if (selection.length() == 3) {
             pop(stack, index);
+            printStack(stack, index);
         }
 
+        // perform push operation and print stack contents
         if (selection.length() == 4 && selection.at(0) != 'q' && selection.at(0) != 'Q') {
             // get chars to push
             while (validInput != true) {
@@ -84,11 +93,16 @@ int main() {
                 validInput = validateEntry(userInput);
                 hasLooped = true;
             }
+            // reset loop variables
             validInput = false;
             hasLooped = false;
 
+            // convert the validated user input to a cstring
             stackInput = convertToCstring(userInput);
+
+            // push user input to stack and print current stack contents
             push(stackInput, stack, index);
+            printStack(stack, index);
         }
 
         if (selection.length() == 4 && (selection.at(0) == 'q' || selection.at(0) == 'Q')) {
@@ -207,4 +221,22 @@ void pop(char **stack, int& index) {
     stack[index-1] = stack[index];
     --index;
     return;
+}
+
+void printStack(char **stack, const int index) {
+    std::cout<<"Stack Contents:";
+    for (int i = 0; i < index; i++) {
+        // copy each cstring in array
+        char *temp = stack[i];
+
+        // print the contents
+        std::cout<<" \"";
+        for (int j = 0; j < strlen(temp); j++) {
+            std::cout<<temp[j];
+        }
+        std::cout<<"\"";
+    
+    }
+
+    std::cout<<"\n\n";
 }
