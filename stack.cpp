@@ -163,7 +163,7 @@ bool validateEntry(std::string& s) {
         return false;
     }
 
-    // convert . to space
+    // convert periods to spaces
     if (s.length() == 1 && s == "."){
         s = " ";
     }
@@ -176,6 +176,29 @@ bool validateEntry(std::string& s) {
         }
     }
 
+    // left justify
+    if (s.length() == 2 && s[0] == ' ' && s[1] != ' ') {
+        char temp = s[0];
+        s[0] = s[1];
+        s[1] = temp;
+    }
+
+    // convert to uppercase
+    // lowercase letters are 97 -> 122 in ascii table, uppercase are 65 -> 90
+    // 32 = space in ascii table
+    if (s[0] > 90) {
+        s[0] -= 32;
+    }
+    if (s.length() == 2) {
+        if (s[1] > 90) {
+            s[1] -= 32;
+        }
+    }
+
+    // ensure a bigram
+    if (s.length() == 1) {
+        s.resize(2, ' ');
+    }
     return true;
 }
 
