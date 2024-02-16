@@ -199,6 +199,7 @@ bool validateEntry(std::string& s) {
     if (s.length() == 1) {
         s.resize(2, ' ');
     }
+
     return true;
 }
 
