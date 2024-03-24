@@ -46,7 +46,7 @@ public:
         } else {
             // update the tail pointer
             QueueEntry *temp = head;
-            int index = tailIndex;
+            int index = headIndex;
             while (temp != tail) {
                 if (index == 5) {
                     index = 0;
@@ -76,17 +76,27 @@ public:
             return -1;
         }
 
+        std::cout << "Head Index: " << headIndex << std::endl;
+        std::cout << "Tail Index: " << tailIndex << std::endl;
+        std::cout << "Head Address: " << head << std::endl;
+        std::cout << "Tail Address: " << tail << std::endl;
+
         std::cout << "Dequeued: " << head->payload << ", " << head->dest << std::endl;
         const char *str = "";
         strcpy(queue[headIndex].payload, str);
 
-        if (tail == head + 1) {
+        if (tail == head + 1 || tail == head - 5) {
             // delete head pointer/index if queue now empty
             head = nullptr;
             headIndex = -1;
         } else {
-            head += 1;
+            if (headIndex == 5) {
+                head -= 5;
+                headIndex = 0;
+            } else {
+                head += 1;
             headIndex += 1;
+            }
         }
 
         return 0;
