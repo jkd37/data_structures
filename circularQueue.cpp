@@ -76,11 +76,6 @@ public:
             return -1;
         }
 
-        std::cout << "Head Index: " << headIndex << std::endl;
-        std::cout << "Tail Index: " << tailIndex << std::endl;
-        std::cout << "Head Address: " << head << std::endl;
-        std::cout << "Tail Address: " << tail << std::endl;
-
         std::cout << "Dequeued: " << head->payload << ", " << head->dest << std::endl;
         const char *str = "";
         strcpy(queue[headIndex].payload, str);
