@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <chrono>
 
 /*recursive function to return the greatest common
 denominator of two integer inputs
@@ -20,6 +21,11 @@ int main() {
     int rVal = 0;
     bool validInput = false;
 
+    // used for calculating computation time
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration;
+    using std::chrono::milliseconds;
+
     while(true) {
         // grab user input
         while(validInput != true) {
@@ -38,9 +44,14 @@ int main() {
         }
 
         // get the greatest common denominator
+        auto t1 = high_resolution_clock::now();
         rVal = gcd(input1, input2);
-        std::cout << "Greatest Common Denominator: " << gcd << std::endl;
-        
+        auto t2 = high_resolution_clock::now();
+        duration<double, std::milli> execTime = t2 - t1;
+
+        std::cout << "Greatest Common Denominator: " << rVal << std::endl;
+        // std::cout << "Execution Time: " << execTime.count() << "ms\n" << std::endl;
+
         // get the users selection
         validInput = false;
         while (!validInput) {
