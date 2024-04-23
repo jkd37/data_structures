@@ -16,6 +16,7 @@ struct Link {
     Link* succ;
 };
 
+// inserts link n before p
 Link* insert(Link* p, Link* n) {
     if (n==nullptr)
         return p;
@@ -30,6 +31,8 @@ Link* insert(Link* p, Link* n) {
     return n;
 }
 
+// search for a node with string value s
+// return the Link pointer
 Link* find(Link* p, const string& s) {
     while (p) {
         if (p->value == s)
