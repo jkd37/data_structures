@@ -51,7 +51,10 @@ int traverse(Link* link) {
     return link->input / 2;
 }
 
-int main() {    
+int main() {
+    int input;
+    char choice;
+
     // create the initial list of norse gods
     Link* norse_gods = new Link{"Loki"};
     norse_gods = insert(norse_gods, new Link{"Thor"});
@@ -59,33 +62,49 @@ int main() {
     norse_gods = insert(norse_gods, new Link{"Freja"});
     norse_gods = insert(norse_gods, new Link{"Asgard"});
 
-    // grab user input
-    int input;
     while (true) {
-        cout << "Enter an integer: ";
-        cin >> input;
-        if (!cin.good()) {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "Please enter only integers!\n";
-        } else {
-            break;
+        // grab user input
+        while (true) {
+            cout << "Enter an integer: ";
+            cin >> input;
+            if (!cin.good()) {
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cout << "Please enter only integers!\n";
+            } else {
+                break;
+            }
+        }
+
+        // grab Loki's link as the starting point
+        Link* p = find(norse_gods, "Loki");
+        if (!p) {
+            cout << "Could not find Loki!\n";
+            return -1;
+        }
+
+        // insert the user input in Loki's node
+        p->input = input;
+        p = nullptr;
+        delete p;
+
+        // recursively traverse the list
+        int result = traverse(norse_gods);
+        cout << "Result: " << result << "\n\n";
+
+        // ask the user to run program again
+        while (true) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Go again? (y/n): ";
+            std::cin.get(choice);
+            if (!std::cin.good() || (choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N')) {
+                std::cout << "Choice not recognized, try again!" << std::endl;
+            } else {
+                if (choice == 'y' || choice == 'Y')
+                    break;
+                return 0;
+            }
         }
     }
-
-    // grab Loki's link as the starting point
-    Link* p = find(norse_gods, "Loki");
-    if (!p) {
-        cout << "Could not find Loki!\n";
-        return -1;
-    }
-
-    // insert the user input in Loki's node
-    p->input = input;
-
-    // recursively traverse the list
-    int result = traverse(norse_gods);
-    cout << "Result: " << result << "\n";
-
-    return 0;
 }
