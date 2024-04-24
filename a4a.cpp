@@ -7,11 +7,11 @@ using std::cout;
 using std::cin;
 
 struct Link {
-    Link(const string& v, Link* p = nullptr, Link* s = nullptr, int i = 0)
+    Link(const string& v, Link* p = nullptr, Link* s = nullptr, float i = 0)
         : value{v}, prev{p}, succ{s}, input{i} { }
 
     string value;
-    int input;
+    float input;
     Link* prev;
     Link* succ;
 };
@@ -46,16 +46,20 @@ Link* find(Link* p, const string& s) {
 
 // recurse through the successors until leaf node is found,
 // then return the integer / 2
-int traverse(Link* link) {
-    if (link->succ != nullptr)
-        return traverse(link->succ);
+float traverse(Link* link) {
+    if (link->prev != nullptr) {
+        cout << link->value << ": " << link->input << "\n";
+        link->prev->input = link->input / 2;
+        return traverse(link->prev);
+    }
 
-    cout << "Leaf is: " << link->value << "\n";
-    return link->input / 2;
+    float result = link->input / 2;
+    cout << link->value << ": " << result << "\n\n";
+    return result;
 }
 
 int main() {
-    int input;
+    float input;
     char choice;
 
     // create the initial list of norse gods
@@ -80,20 +84,17 @@ int main() {
         }
 
         // grab Loki's link as the starting point
-        Link* p = find(norse_gods, "Loki");
-        if (!p) {
+        Link* loki = find(norse_gods, "Loki");
+        if (!loki) {
             cout << "Could not find Loki!\n";
             return -1;
         }
 
         // insert the user input in Loki's node
-        p->input = input;
-        p = nullptr;
-        delete p;
+        loki->input = input;
 
         // recursively traverse the list
-        int result = traverse(norse_gods);
-        cout << "Result: " << result << "\n\n";
+        float r = traverse(loki);
 
         // ask the user to run program again
         while (true) {
