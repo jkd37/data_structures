@@ -103,7 +103,7 @@ float Asgard::traverse(float &m, float x, float b) {
         return traverse(m, x, b);
     }
 
-    cout << link->value << ": " << input << "\n";
+    cout << link->value << ": input=" << input << ", m=" << m << ", x=" << x << "\n";
     input = input / 2;
     link = norse_gods; // reset link to point back at start of list
 

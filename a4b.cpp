@@ -21,7 +21,7 @@ int main() {
     while (true) {
         // grab user input
         while (true) {
-            cout << "Enter a number: ";
+            cout << "Enter an input number: ";
             cin >> input;
             if (!cin.good()) {
                 cin.clear();
