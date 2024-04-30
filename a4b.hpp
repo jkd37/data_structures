@@ -7,11 +7,10 @@ using std::cout;
 using std::cin;
 
 struct Link {
-    Link(const string& v, Link* p = nullptr, Link* s = nullptr, float i = 0)
-        : value{v}, prev{p}, succ{s}, input{i} { }
+    Link(const string& v, Link* p = nullptr, Link* s = nullptr)
+        : value{v}, prev{p}, succ{s} { }
 
     string value;
-    float input;
     Link* prev;
     Link* succ;
 };
@@ -47,6 +46,7 @@ class Asgard {
 private:
     Link* norse_gods;
     Link* link; // used for recursion traversal
+    float input;
     float m = 1;
     float x = 0;
 
@@ -54,7 +54,7 @@ public:
     Asgard(const char* leaf);
 
     int addGod(const char* name);
-    int input(int i);
+    int setInput(float i);
     float traverse();
     void setM(int val);
 
@@ -78,8 +78,8 @@ int Asgard::addGod(const char* name) {
 }
 
 // assign int value to first node in linked list
-int Asgard::input(int i) {
-    norse_gods->input = i;
+int Asgard::setInput(float i) {
+    input = i;
     link = norse_gods;
     return 0;
 }
@@ -88,8 +88,8 @@ int Asgard::input(int i) {
 // dividing by 2 each recursion
 float Asgard::traverse() {
     if (link->succ != nullptr) {
-        cout << link->value << ": " << link->input << "\n";
-        link->succ->input = link->input / 2;
+        cout << link->value << ": " << input << "\n";
+        input = input / 2;
 
         // update link pointer
         link = link->succ;
@@ -100,10 +100,10 @@ float Asgard::traverse() {
         return traverse();
     }
 
-    float result = link->input;
-    cout << link->value << ": " << result << "\n";
+    cout << link->value << ": " << input << "\n";
+    input = input / 2;
     link = norse_gods;
-    return result / 2;
+    return input;
 }
 
 void Asgard::setM(int val) {

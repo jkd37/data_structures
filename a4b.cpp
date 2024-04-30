@@ -46,7 +46,7 @@ int main() {
         }
 
         // add the user input to class
-        asgard.input(input);
+        asgard.setInput(input);
 
         // set the m parameter
         asgard.setM(m);
