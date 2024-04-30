@@ -46,7 +46,7 @@ Link* find(Link* p, const string& s) {
 class Asgard {
 private:
     Link* norse_gods;
-    Link* link;
+    Link* link; // used for recursion traversal
     float m = 1;
     float x = 0;
 
@@ -56,6 +56,7 @@ public:
     int addGod(const char* name);
     int input(int i);
     float traverse();
+    void setM(int val);
 
     ~Asgard() {
         delete link;
@@ -89,7 +90,13 @@ float Asgard::traverse() {
     if (link->succ != nullptr) {
         cout << link->value << ": " << link->input << "\n";
         link->succ->input = link->input / 2;
+
+        // update link pointer
         link = link->succ;
+
+        // update m value
+        m = m*0.1;
+
         return traverse();
     }
 
@@ -97,4 +104,8 @@ float Asgard::traverse() {
     cout << link->value << ": " << result << "\n";
     link = norse_gods;
     return result / 2;
+}
+
+void Asgard::setM(int val) {
+    m = val;
 }

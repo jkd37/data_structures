@@ -9,6 +9,7 @@ using std::cin;
 
 int main() {
     float input;
+    float m;
     char choice;
 
     // create the initial list of norse gods
@@ -31,8 +32,24 @@ int main() {
             }
         }
 
-        // insert the user input in Loki's node
+        // grab value for m
+        while (true) {
+            cout << "Enter starting value for m: ";
+            cin >> m;
+            if (!cin.good()) {
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cout << "Please enter only numbers!\n";
+            } else {
+                break;
+            }
+        }
+
+        // add the user input to class
         asgard.input(input);
+
+        // set the m parameter
+        asgard.setM(m);
 
         // recursively traverse the list
         float r = asgard.traverse();
