@@ -47,16 +47,18 @@ private:
     Link* norse_gods;
     Link* link; // used for recursion traversal
     float input;
-    float m = 1;
+    // float m = 1;
     float x = 0;
+    // float b = 0.5;
 
 public:
     Asgard(const char* leaf);
 
     int addGod(const char* name);
     int setInput(float i);
-    float traverse();
-    void setM(int val);
+    float traverse(float &m, float x, float b);
+    // void setM(float &val);
+    // void setB(float &val);
 
     ~Asgard() {
         delete link;
@@ -86,26 +88,32 @@ int Asgard::setInput(float i) {
 
 // recurse through the successors until leaf node is found,
 // dividing by 2 each recursion
-float Asgard::traverse() {
+float Asgard::traverse(float &m, float x, float b) {
     if (link->succ != nullptr) {
-        cout << link->value << ": " << input << "\n";
+        cout << link->value << ": input=" << input << ", m=" << m << ", x=" << x << "\n";
         input = input / 2;
 
         // update link pointer
         link = link->succ;
 
-        // update m value
-        m = m*0.1;
+        // update param values
+        m *= 0.1;
+        x += 0.1;
 
-        return traverse();
+        return traverse(m, x, b);
     }
 
     cout << link->value << ": " << input << "\n";
     input = input / 2;
-    link = norse_gods;
+    link = norse_gods; // reset link to point back at start of list
+
     return input;
 }
 
-void Asgard::setM(int val) {
-    m = val;
-}
+// void Asgard::setM(float &val) {
+//     m = val;
+// }
+
+// void Asgard::setB(int &val) {
+//     b = val;
+// }

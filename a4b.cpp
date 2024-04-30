@@ -10,7 +10,7 @@ using std::cin;
 int main() {
     float input;
     float m;
-    char choice;
+    char choice; // user decision to repeat program
 
     // create the initial list of norse gods
     Asgard asgard = Asgard("Loki");
@@ -41,18 +41,40 @@ int main() {
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 cout << "Please enter only numbers!\n";
             } else {
-                break;
+                if (m == 0) {
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    cout << "m cannot be 0!\n";
+                } else {
+                    break;
+                }
             }
         }
+
+        // grab value for b
+        // while (true) {
+        //     cout << "Enter starting value for b: ";
+        //     cin >> m;
+        //     if (!cin.good()) {
+        //         cin.clear();
+        //         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        //         cout << "Please enter only numbers!\n";
+        //     } else {
+        //         break;
+        //     }
+        // }
 
         // add the user input to class
         asgard.setInput(input);
 
         // set the m parameter
-        asgard.setM(m);
+        // asgard.setM(m);
+
+        // set the b parameter
+        // asgard.setB(b);
 
         // recursively traverse the list
-        float r = asgard.traverse();
+        float r = asgard.traverse(m, 0, 0.5);
         cout << "Return: " << r << "\n";
 
         // ask the user to run program again
